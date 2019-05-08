@@ -1,15 +1,10 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../models/user")
+const checkLogin = require("../middleware/index") // Authorization custom middleware
 
 /* GET home page. */
-router.get("/", (req, res, next) => {
-  // Authorization
-  if (!req.session.userId) {
-    const err = new Error("You are not authorized to view this page.")
-    err.status = 403
-    next(err)
-  }
+router.get("/", checkLogin.requiresLogin, (req, res, next) => {
   // Load data from DB
   User.findById(req.session.userId).exec((error, user) => {
     if (error || user == null) {
