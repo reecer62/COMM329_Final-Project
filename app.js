@@ -6,6 +6,7 @@ const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const logger = require("morgan")
 const session = require("express-session")
+const MongoStore = require("connect-mongo")(session)
 
 // Load environment variables
 const result = dotenv.config()
@@ -29,11 +30,15 @@ app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 
 // Use Middleware
+const db = mongoose.connection
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: db
+    })
   })
 )
 // Make userId available to templates
