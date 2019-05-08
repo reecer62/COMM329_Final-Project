@@ -36,7 +36,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(helmet())
 
 // Define Routes
+app.use("/", require("./routes/home"))
 app.use("/login", require("./routes/login"))
+app.use("/register", require("./routes/register"))
+app.use("/lobby", require("./routes/lobby"))
 
 // Start server
 const http = require("http").Server(app)
