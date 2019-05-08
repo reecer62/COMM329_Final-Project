@@ -10,7 +10,7 @@ router.post("/", (req, res, next) => {
     req.body.password &&
     req.body.confirm_password
   ) {
-    if (req.body.password == req.body.confirm_password) {
+    if (req.body.password === req.body.confirm_password) {
       // Create object with form input
       const userData = {
         username: req.body.signup_username,
@@ -18,17 +18,21 @@ router.post("/", (req, res, next) => {
       }
       // Insert user into mongo
       User.create(userData, (err, user) => {
-        console.log(`Created user: ${userData}`)
+        if (err) {
+          next(err)
+        } else {
+          res.redirect("/")
+        }
       })
     } else {
       const err = new Error("Passwords do not match.")
       err.status = 400
-      return next(err)
+      next(err)
     }
   } else {
     const err = new Error("All fields required.")
     err.status = 400
-    return next(err)
+    next(err)
   }
   // Save cookies
   // Save session
