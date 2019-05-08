@@ -40,6 +40,20 @@ app.use("/", require("./routes/home"))
 app.use("/login", require("./routes/login"))
 app.use("/register", require("./routes/register"))
 app.use("/lobby", require("./routes/lobby"))
+// Catch 404 and pass to error handler
+app.use((req, res, next) => {
+  const err = new Error("File Not Found")
+  err.status = 404
+  next(err)
+})
+// Error handler
+app.use((err, req, res, next) => {
+  res.status(err.status || 500)
+  res.render("error", {
+    message: err.message,
+    error: err.status
+  })
+})
 
 // Start server
 const http = require("http").Server(app)
