@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../models/user")
+const checkLogin = require("../middleware/index")
 
 /* POST register. */
-router.post("/", (req, res, next) => {
+router.post("/", checkLogin.loggedOut, (req, res, next) => {
   // Save data to DB
   if (
     req.body.signup_username &&

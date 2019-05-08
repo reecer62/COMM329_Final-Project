@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../models/user")
+const checkLogin = require("../middleware/index")
 
 /* GET login page. */
-router.get("/", (req, res, next) => {
+router.get("/", checkLogin.loggedOut, (req, res, next) => {
   // Load data from DB
   res.render("login", {
     title: "Login"
@@ -11,7 +12,7 @@ router.get("/", (req, res, next) => {
 })
 
 /* POST login. */
-router.post("/", (req, res, next) => {
+router.post("/", checkLogin.loggedOut, (req, res, next) => {
   // Authenticate
   if (req.body.login_username && req.body.login_password) {
     User.authenticate(
