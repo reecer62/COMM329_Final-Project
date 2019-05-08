@@ -16,6 +16,26 @@ const UserSchema = new Schema({
   }
 })
 
+// Authenticate input against database documents
+UserSchema.statics.authenticate = (username, password, callback) => {
+  User.findOne({ username }).exec((error, user) => {
+    if (error) {
+      callback(error)
+    } else if (!user) {
+      const err = new Error("User not found.")
+      err.status = 401
+      callback(err)
+    }
+    bcrypt.compare(password, user.password, (error, result) => {
+      if (result === true) {
+        callback(null, user)
+      } else {
+        callback()
+      }
+    })
+  })
+}
+
 // Hash password before saving to db
 UserSchema.pre("save", function(next) {
   let user = this

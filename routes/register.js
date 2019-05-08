@@ -21,6 +21,8 @@ router.post("/", (req, res, next) => {
         if (err) {
           next(err)
         } else {
+          //Save session
+          req.session.userId = user._id
           res.redirect("/")
         }
       })
@@ -34,8 +36,6 @@ router.post("/", (req, res, next) => {
     err.status = 400
     next(err)
   }
-  // Save cookies
-  // Save session
 })
 
 module.exports = router
