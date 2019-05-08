@@ -5,6 +5,7 @@ const helmet = require("helmet")
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const logger = require("morgan")
+const session = require("express-session")
 
 // Load environment variables
 const result = dotenv.config()
@@ -28,6 +29,13 @@ app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 
 // Use Middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false
+  })
+)
 app.use(express.static(path.join(__dirname, "bower_components")))
 app.use(express.static(path.join(__dirname, "public")))
 app.use(bodyParser.json())
