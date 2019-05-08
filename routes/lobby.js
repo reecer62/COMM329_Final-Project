@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const checkLogin = require("../middleware/index")
+const checkLogin = require("../middleware/userAuth")
 
 /* GET Lobby login page. */
 router.get("/", checkLogin.requiresLogin, (req, res, next) => {

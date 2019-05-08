@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../models/user")
-const checkLogin = require("../middleware/index")
+const checkLogin = require("../middleware/userAuth")
 
 /* POST register. */
 router.post("/", checkLogin.loggedOut, (req, res, next) => {
