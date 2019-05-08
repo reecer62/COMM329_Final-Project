@@ -10,5 +10,8 @@
   </head>
   <body>
     <p>Welcome <%= username %>!</p>
+    <% if (currentUser) { %>
+    <button type="submit">Logout</button>
+    <% } %>
   </body>
 </html>

@@ -36,6 +36,11 @@ app.use(
     saveUninitialized: false
   })
 )
+// Make userId available to templates
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session.userId
+  next()
+})
 app.use(express.static(path.join(__dirname, "bower_components")))
 app.use(express.static(path.join(__dirname, "public")))
 app.use(bodyParser.json())
