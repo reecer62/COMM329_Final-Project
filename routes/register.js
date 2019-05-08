@@ -16,16 +16,22 @@ router.post("/", (req, res, next) => {
         username: req.body.signup_username,
         password: req.body.password
       }
-
       // Insert user into mongo
       User.create(userData, (err, user) => {
         console.log(`Created user: ${userData}`)
       })
+    } else {
+      const err = new Error("Passwords do not match.")
+      err.status = 400
+      return next(err)
     }
+  } else {
+    const err = new Error("All fields required.")
+    err.status = 400
+    return next(err)
   }
   // Save cookies
   // Save session
-  res.redirect("/")
 })
 
 module.exports = router
