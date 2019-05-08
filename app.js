@@ -53,6 +53,7 @@ app.use("/", require("./routes/home"))
 app.use("/login", require("./routes/login"))
 app.use("/register", require("./routes/register"))
 app.use("/lobby", require("./routes/lobby"))
+app.use("/logout", require("./routes/logout"))
 // Catch 404 and pass to error handler
 app.use((req, res, next) => {
   const err = new Error("File Not Found")

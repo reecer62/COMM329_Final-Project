@@ -12,7 +12,7 @@ router.get("/", (req, res, next) => {
   }
   // Load data from DB
   User.findById(req.session.userId).exec((error, user) => {
-    if (error) {
+    if (error || user == null) {
       next(error)
     } else {
       res.render("home", {

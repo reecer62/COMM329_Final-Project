@@ -6,12 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="/styles/sanitize.css" />
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="/scripts/logout.js"></script>
     <title><%= title %></title>
   </head>
   <body>
     <p>Welcome <%= username %>!</p>
     <% if (currentUser) { %>
-    <button type="submit">Logout</button>
+    <button type="submit" class="btn btn-primary" onclick="logout()">
+      Logout
+    </button>
     <% } %>
   </body>
 </html>
