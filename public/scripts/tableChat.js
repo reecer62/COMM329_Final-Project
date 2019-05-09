@@ -5,6 +5,7 @@ var form = document.getElementById("message-form")
 var message = document.getElementById("message")
 var messages = document.getElementById("messages")
 var typingList = document.getElementById("typing")
+var chatBox = document.getElementById("chat-box")
 var username = document.getElementsByClassName("uname-text")[0].textContent
 socket.emit("sendNickname", username)
 
@@ -40,6 +41,7 @@ socket.on("message", msg => {
   let text = document.createTextNode(msg)
   node.appendChild(text)
   messages.appendChild(node)
+  chatBox.scrollTop = chatBox.scrollHeight
 })
 
 socket.on("typing", clientID => {

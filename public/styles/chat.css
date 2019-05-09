@@ -1,0 +1,29 @@
+#container {
+  padding: 2em;
+}
+
+#messages {
+  height: 200px;
+  width: 100%;
+  padding-left: 0;
+}
+
+#chat-box {
+  max-height: 200px;
+  overflow: scroll;
+}
+
+#typing {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.shadow-textarea textarea.form-control::placeholder {
+  font-weight: 300;
+}
+.shadow-textarea textarea.form-control {
+  padding-left: 0.8rem;
+}
