@@ -79,35 +79,40 @@ const http = require("http").Server(app)
 const io = require("socket.io")(http)
 http.listen(port, () => console.log(`Server started on port ${port}`))
 
+var people = {}
+
 // Socket connection
 io.on("connection", client => {
-  // Client has connected
-  io.emit("message", client.id + " joined")
+  client.on("sendNickname", nickname => {
+    people[client.id] = nickname
+    io.emit("message", people[client.id] + " joined")
+  })
 
   // Relay message
   client.on("message", msg => {
-    io.emit("message", msg)
+    io.emit("message", people[client.id] + ": " + msg)
   })
 
   // Client typing
   client.on("typing", () => {
-    io.emit("typing", client.id)
+    io.emit("typing", people[client.id])
   })
 
   // Client stop typing
   client.on("stop typing", () => {
-    io.emit("stop typing", client.id)
+    io.emit("stop typing", people[client.id])
   })
 
   // Client disconnects
   client.on("disconnect", () => {
-    console.log("client disconnect...", client.id)
-    io.emit("message", client.id + " left")
+    console.log("client disconnect...", people[client.id])
+    io.emit("message", people[client.id] + " left")
+    delete people[client.id]
   })
 
   // Error handling
   client.on("error", err => {
-    console.log("received error from client: ", client.id)
+    console.log("received error from client: ", people[client.id])
     console.log(err)
   })
 })

@@ -5,6 +5,8 @@ var form = document.getElementById("message-form")
 var message = document.getElementById("message")
 var messages = document.getElementById("messages")
 var typingList = document.getElementById("typing")
+var username = document.getElementsByClassName("uname-text")[0].textContent
+socket.emit("sendNickname", username)
 
 form.addEventListener("submit", e => {
   e.preventDefault()

@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="/styles/style.css" />
     <script src="/bootstrap/dist/js/bootstrap.bundle.js" defer></script>
     <script src="/scripts/logout.js" defer></script>
+    <% if (tableId) { %>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/scripts/tableChat.js" defer></script>
+    <% } %>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
@@ -51,5 +55,63 @@
         </div>
       </div>
     </nav>
+
+    <% if (tableId) { %>
+    <p>Table ID: <%= tableId %></p>
+    <ul id="messages"></ul>
+    <form id="message-form" action="/">
+      <textarea id="message" name="message" cols="30" rows="10"></textarea>
+      <button type="submit">SUBMIT</button>
+      <ul id="typing"></ul>
+    </form>
+    <% } else { %>
+      <form action="/table" method="POST">
+
+            <h1>Join Table</h1>
+  
+            <p>
+              <div class="form-group">
+                <label for="table_id">
+                  <span>Table ID:</span>
+                </label>
+                <input id="table_id" type="text" name="table_id" class="form-control login" autofocus/>
+              </div>
+            </p>
+  
+            <p>
+              <div class="form-group">
+                <label for="table_password">
+                  <span>Table Password:</span>
+                </label>
+                <input id="table_password" type="password" name="table_password" class="form-control"/>
+              </div>
+            </p>
+
+
+            <h1>Create Table</h1>
+  
+            <p>
+              <div class="form-group">
+                <label for="create_id">
+                  <span>Table ID:</span>
+                </label>
+                <input id="create_id" type="text" name="create_id" class="form-control"/>
+              </div>
+            </p>
+  
+            <p>
+              <div class="form-group">
+                <label for="create_password">
+                  <span>Table Password:</span>
+                </label>
+                <input id="create_password" type="password" name="create_password" class="form-control"/>
+              </div>
+            </p>   
+  
+        <section class="button-wrapper">
+          <button type="submit" id="submit-btn" class="btn btn-primary">SUBMIT</button>
+        </section>
+      </form>
+    <% } %>
   </body>
 </html>
