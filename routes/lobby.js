@@ -1,12 +1,20 @@
 const express = require("express")
 const router = express.Router()
 const checkLogin = require("../middleware/userAuth")
+const User = require("../models/user")
 
 /* GET Lobby login page. */
 router.get("/", checkLogin.requiresLogin, (req, res, next) => {
   // Load data from DB
-  res.render("lobby", {
-    title: "Lobby"
+  User.findById(req.session.userId).exec((error, user) => {
+    if (error || user == null) {
+      next(error)
+    } else {
+      res.render("lobby", {
+        title: "Lobby",
+        username: user.username
+      })
+    }
   })
 })
 

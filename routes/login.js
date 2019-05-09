@@ -26,6 +26,7 @@ router.post("/", checkLogin.loggedOut, (req, res, next) => {
         } else {
           //Save session
           req.session.userId = user._id
+          res.cookie("username", user.username)
           res.redirect("/")
         }
       }
